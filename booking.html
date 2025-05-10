@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking - SR Automobile Workshop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('360_F_218882840_J6OZff4ugrSfwq3OzakFYsg8lk0dS0Zb.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        form {
+            margin: 50px auto;
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+        }
+        input, select, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <form id="bookingForm">
+        <h2>Book an Appointment</h2>
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+        <input type="text" id="phone" name="phone" placeholder="Your Phone Number" required>
+        <select id="service" name="service" required>
+            <option value="">Select a Service</option>
+            <option value="Oil Change">Oil Change</option>
+            <option value="Tire Replacement">Tire Replacement</option>
+            <option value="Engine Repair">Engine Repair</option>
+        </select>
+        <input type="date" id="date" name="date" required>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service').value,
+                date: document.getElementById('date').value
+            };
+            const response = await fetch('/api/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            const message = await response.text();
+            alert(message);
+        });
+    </script>
+</body>
+</html>
